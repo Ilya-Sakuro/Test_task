@@ -1,4 +1,10 @@
-import { DashboardOutlined, ShoppingCartOutlined, CalendarOutlined, SmileOutlined } from '@ant-design/icons';
+import {
+  DashboardOutlined,
+  ShoppingCartOutlined,
+  CalendarOutlined,
+  SmileOutlined,
+  SettingOutlined,
+} from '@ant-design/icons';
 import { APP_PREFIX_PATH } from 'configs/AppConfig';
 
 const dashBoardNavTree = [
@@ -94,7 +100,26 @@ const dashBoardNavTree = [
     ],
   },
 ];
+const settingBoardNavTree = [
+  {
+    key: 'Setting',
+    path: `${APP_PREFIX_PATH}/setting`,
+    title: 'Основные',
+    icon: DashboardOutlined,
+    breadcrumb: false,
+    submenu: [
+      {
+        key: 'Setting',
+        path: `${APP_PREFIX_PATH}/setting/clients/list/:userId`,
+        title: 'Основные',
+        icon: SettingOutlined,
+        breadcrumb: false,
+        submenu: [],
+      },
+    ],
+  },
+];
 
-const navigationConfig = [...dashBoardNavTree];
+const navigationConfig = [...dashBoardNavTree, ...settingBoardNavTree];
 
 export default navigationConfig;

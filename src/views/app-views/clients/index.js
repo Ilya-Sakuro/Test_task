@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Card, Table, Tag, Tooltip, message, Button } from 'antd';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
+import { Card, Table, Tooltip, message, Button } from 'antd';
 import { EyeOutlined, DeleteOutlined } from '@ant-design/icons';
-import moment from 'moment';
 import UserView from './UserView';
 import AvatarStatus from 'components/shared-components/AvatarStatus';
 import Loading from 'components/shared-components/Loading';
+import { ClientsContext } from 'contexts/ClientsContext';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { APP_PREFIX_PATH } from 'configs/AppConfig';
 
 const ClientsList = () => {
-  const [users, setUsers] = useState([]);
+  const { users, setUsers, fetchUserData } = useContext(ClientsContext);
   const [userProfileVisible, setUserProfileVisible] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
+  const memoizedFetchUserData = useCallback(fetchUserData, []);
+
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then((response) => response.json())
-      .then((data) => setUsers(data))
-      .catch((error) => console.error('Error fetching data:', error));
-  }, []);
+    memoizedFetchUserData();
+  }, [memoizedFetchUserData]);
 
   const deleteUser = (userId) => {
     setUsers((prevUsers) => prevUsers.filter((item) => item.id !== userId));
@@ -39,11 +40,13 @@ const ClientsList = () => {
       dataIndex: 'name',
       render: (_, record) => (
         <div className="d-flex">
-          <AvatarStatus
-            src={record.name && '/img/avatars/3551739.jpg'}
-            name={record.name}
-            subTitle={record.email}
-          />
+          <Link to={`${APP_PREFIX_PATH}/setting/clients/list/${record.name}`}>
+            <AvatarStatus
+              src={record.name && '/img/avatars/3551739.jpg'}
+              name={record.name}
+              subTitle={record.email}
+            />
+          </Link>
         </div>
       ),
       sorter: {

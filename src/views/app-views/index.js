@@ -1,7 +1,8 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Loading from 'components/shared-components/Loading';
 import { APP_PREFIX_PATH } from 'configs/AppConfig';
+import { ClientsContext } from 'contexts/ClientsContext';
 
 export const AppViews = () => {
   return (
@@ -12,6 +13,11 @@ export const AppViews = () => {
           path={`${APP_PREFIX_PATH}/dashboards/clients/list`}
           component={lazy(() => import(`./clients`))}
         />
+        <Route
+          path={`${APP_PREFIX_PATH}/setting/clients/list/:userId`}
+          component={lazy(() => import(`./setting-profile`))}
+        />
+
         <Redirect from={`${APP_PREFIX_PATH}`} to={`${APP_PREFIX_PATH}/home`} />
       </Switch>
     </Suspense>
