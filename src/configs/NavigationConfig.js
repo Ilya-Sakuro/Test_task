@@ -11,7 +11,7 @@ const dashBoardNavTree = [
     submenu: [
       {
         key: 'dashboards-default',
-        path: `${APP_PREFIX_PATH}/dashboards/default`,
+        path: `${APP_PREFIX_PATH}/test`,
         title: 'Дашборд',
         icon: DashboardOutlined,
         breadcrumb: false,
@@ -19,7 +19,7 @@ const dashBoardNavTree = [
       },
       {
         key: 'catalog-default',
-        path: `${APP_PREFIX_PATH}/dashboards/catalog`,
+        path: `${APP_PREFIX_PATH}/test/catalog`,
         title: 'Каталог',
         icon: ShoppingCartOutlined,
         breadcrumb: false,
