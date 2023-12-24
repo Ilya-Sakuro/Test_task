@@ -1,14 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Avatar, Button, Input, DatePicker, Row, Col, message, Upload } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { ROW_GUTTER } from 'constants/ThemeConstant';
 import Flex from 'components/shared-components/Flex';
-import { ClientsContext } from 'contexts/ClientsContext';
 import { APP_PREFIX_PATH } from 'configs/AppConfig';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom';
 
-const EditProfile = ({ match }) => {
-  const { users } = useContext(ClientsContext);
+const EditProfile = () => {
   const [avatarUrl, setAvatarUrl] = useState('/img/avatars/3551739.jpg');
   const history = useHistory();
 
@@ -19,6 +17,7 @@ const EditProfile = ({ match }) => {
     message.loading({ content: 'Updating...', key });
     setTimeout(() => {
       message.success({ content: 'Done!', key, duration: 2 });
+      console.log(JSON.stringify(values, null, 2));
       setTimeout(() => {
         history.push(`${APP_PREFIX_PATH}/dashboards/clients/list`);
       }, 1000);
@@ -38,6 +37,8 @@ const EditProfile = ({ match }) => {
     if (info.file.status === 'done') {
       getBase64(info.file.originFileObj, (imageUrl) => setAvatarUrl(imageUrl));
       message.success({ content: 'Uploaded!', key, duration: 1.5 });
+    } else if (info.file.status === 'error') {
+      message.error({ content: 'Image upload failed. Please try again.', key, duration: 2 });
     }
   };
 
@@ -65,13 +66,7 @@ const EditProfile = ({ match }) => {
         </div>
       </Flex>
       <div className="mt-4">
-        <Form
-          name="basicInformation"
-          layout="vertical"
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          initialValues={{ name: '' }}
-        >
+        <Form name="basicInformation" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <Row>
             <Col xs={24} sm={24} md={24} lg={16}>
               <Row gutter={ROW_GUTTER}>

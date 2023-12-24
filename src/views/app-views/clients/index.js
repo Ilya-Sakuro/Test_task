@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Card, Table, Tooltip, message, Button } from 'antd';
 import { EyeOutlined, DeleteOutlined } from '@ant-design/icons';
 import UserView from './UserView';
@@ -13,11 +13,9 @@ const ClientsList = () => {
   const [userProfileVisible, setUserProfileVisible] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
-  const memoizedFetchUserData = useCallback(fetchUserData, []);
-
   useEffect(() => {
-    memoizedFetchUserData();
-  }, [memoizedFetchUserData]);
+    fetchUserData();
+  }, []);
 
   const deleteUser = (userId) => {
     setUsers((prevUsers) => prevUsers.filter((item) => item.id !== userId));
@@ -105,7 +103,7 @@ const ClientsList = () => {
       ),
     },
   ];
-  if (users.length <= 0) {
+  if (users.length === 0) {
     return <Loading align="" cover="" />;
   }
   return (

@@ -5,7 +5,6 @@ import {
   MailOutlined,
   UserOutlined,
   CompassOutlined,
-  CalendarOutlined,
   FacebookOutlined,
   InstagramOutlined,
   TwitterOutlined,
